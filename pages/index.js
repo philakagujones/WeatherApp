@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Search from '../comps/search'
 
 export default function Home() {
   return (
@@ -11,10 +12,11 @@ export default function Home() {
       <meta name="theme-color" content="currentColor" />
     </Head>
 
-    <div className='home'></div>
-    <div className='container'></div>
-
-    <h1>HELLO WORLD</h1>
+    <div className='home'>
+      <div className='container'>
+        <Search />
+      </div>
+    </div>
    </div>
   )
 }
