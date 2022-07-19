@@ -41,7 +41,7 @@ export default function Search() {
                 {results.length > 0 ? (
                     results.map((city) => (
                         <li key={city.slug}>
-                            <Link href={`'/location/${city.slug}'`}>
+                            <Link href={`/location/${city.slug}`}>
                                 <a>
                                     {city.name}
                                     {city.state ? `, ${city.state}` : ""}
