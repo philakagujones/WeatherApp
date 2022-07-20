@@ -6,6 +6,7 @@ import Today from '../../comps/today';
 import Hourly from '../../comps/hourly';
 import Weekly from '../../comps/weekly';
 import Search from '../../comps/search';
+import Link from 'next/link';
 
 export async function getServerSideProps(context) {
   const city = getCity(context.params.city);
@@ -71,7 +72,9 @@ export default function City({ hourlyWeather, currentWeather, dailyWeather, city
       
       <div className='page-wrapper'>
         <div className='container'>
-          <h1>Weather Watch</h1>
+          <Link href={'/'}>
+            <h1>Weather Watch (Logo)</h1>
+          </Link>
           <Search />
           <Today city={city} weather={dailyWeather[0]} timezone={timezone}/>
           <Hourly hourlyWeather={hourlyWeather} timezone={timezone}/>

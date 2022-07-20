@@ -1,10 +1,20 @@
 import Link from 'next/link';
+import { Router } from 'next/router';
 import React from 'react'
 import cities from '../lib/city.list.json'
 
 export default function Search() {
   const [query, setQuery] = React.useState("");
   const [results, setResults] = React.useState([]);
+
+  React.useEffect(() => {
+    const clearQuery = () => setQuery('');
+    Router.events.on('routeChangeComplete', clearQuery)
+
+    return () => {
+        Router.events.off('routeChangeComplete', clearQuery)
+    }
+  }, [])
 
   const onChange = (e) => {
     const { value } = e.target;
@@ -14,7 +24,7 @@ export default function Search() {
 
     if (value.length > 3) {
         for (let city of cities) {
-            if (matchingCities.length >= 5) {
+            if (matchingCities.length >= 7) {
                 break;
             }
 
