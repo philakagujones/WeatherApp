@@ -1,6 +1,9 @@
 import React from 'react'
+import moment from 'moment-timezone';
 import Head from 'next/head';
 import cities from "../../lib/city.list.json"
+import Today from '../../comps/today';
+import Hourly from '../../comps/hourly';
 
 export async function getServerSideProps(context) {
   const city = getCity(context.params.city);
@@ -24,9 +27,10 @@ export async function getServerSideProps(context) {
   return {
     props: {
       city: city,
+      timezone: data.timezone,
       currentWeather: data.current,
       dailyWeather: data.daily,
-      hourlyWeather: getHourlyWeather(data.hourly),
+      hourlyWeather: getHourlyWeather(data.hourly, data.timezone),
     },
   }
 }
@@ -49,27 +53,26 @@ const getCity = param => {
   }
 }
 
-const getHourlyWeather = (hourlyData) => {
-  const current = new Date();
-  current.setHours(current.getHours(), 0, 0, 0);
-  const tomorrow = new Date(current);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  tomorrow.setHours(0,0,0,0);
-
-  const currentTimeStamp = Math.floor(current.getTime() / 1000);
-  const tomorrowTimeStamp = Math.floor(tomorrow.getTime() / 1000);
-
-  const todayData = hourlyData.filter(data => data.dt < tomorrowTimeStamp);
+const getHourlyWeather = (hourlyData, timezone) => {
+  const endOfDay = moment().tz(timezone).endOf('day').valueOf();
+  const eodTimeStamp = Math.floor(endOfDay/1000);
+  const todayData = hourlyData.filter(data => data.dt < eodTimeStamp);
   return todayData;
 }
 
-export default function City({ hourlyWeather, currentWeather, dailyWeather, city }) {
+export default function City({ hourlyWeather, currentWeather, dailyWeather, city, timezone }) {
   return (
     <div>
       <Head>
         <title>{city.name} | Weather Watch</title>
       </Head>
-        <h1>City Page</h1>
+      
+      <div className='page-wrapper'>
+        <div className='container'>
+          <Today city={city} weather={dailyWeather[0]} timezone={timezone}/>
+          <Hourly hourlyWeather={hourlyWeather} timezone={timezone}/>
+        </div>
+      </div>
     </div>
   )
 }

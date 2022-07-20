@@ -15,4 +15,7 @@ module.exports = withPWA({
     register: true,
     skipWaiting: true,
   },
+  images: {
+    domains: ['openweathermap.org'],
+  }
 });
