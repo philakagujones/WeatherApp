@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Places from '../comps/places'
 import Search from '../comps/search'
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
     <div className='home'>
       <div className='container'>
         <Search />
+        <Places />
       </div>
     </div>
    </div>
