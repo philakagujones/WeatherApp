@@ -4,6 +4,7 @@ import Head from 'next/head';
 import cities from "../../lib/city.list.json"
 import Today from '../../comps/today';
 import Hourly from '../../comps/hourly';
+import Weekly from '../../comps/weekly';
 
 export async function getServerSideProps(context) {
   const city = getCity(context.params.city);
@@ -71,6 +72,7 @@ export default function City({ hourlyWeather, currentWeather, dailyWeather, city
         <div className='container'>
           <Today city={city} weather={dailyWeather[0]} timezone={timezone}/>
           <Hourly hourlyWeather={hourlyWeather} timezone={timezone}/>
+          <Weekly weeklyWeather={dailyWeather} timezone={timezone}/>
         </div>
       </div>
     </div>
