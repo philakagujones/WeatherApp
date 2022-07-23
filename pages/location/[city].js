@@ -1,12 +1,14 @@
 import React from 'react'
 import moment from 'moment-timezone';
 import Head from 'next/head';
+import Logo from '../../public/altlogo.png'
 import cities from "../../lib/city.list.json"
 import Today from '../../comps/today';
 import Hourly from '../../comps/hourly';
 import Weekly from '../../comps/weekly';
 import Search from '../../comps/search';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export async function getServerSideProps(context) {
   const city = getCity(context.params.city);
@@ -69,12 +71,20 @@ export default function City({ hourlyWeather, currentWeather, dailyWeather, city
       <Head>
         <title>{city.name} | Weather Watch</title>
       </Head>
+
+      <div className='logoo'>
+        <Link href={'/'}>
+          <Image 
+            src={Logo}
+            width='300'
+            height='300'
+            className='link'
+          />
+        </Link>
+      </div>
       
       <div className='page-wrapper'>
         <div className='container'>
-          <Link href={'/'}>
-            <h1>Weather Watch (Logo)</h1>
-          </Link>
           <Search />
           <Today city={city} weather={dailyWeather[0]} timezone={timezone}/>
           <Hourly hourlyWeather={hourlyWeather} timezone={timezone}/>
