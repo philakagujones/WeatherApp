@@ -112,3 +112,6 @@ dist
 **/public/worker-*.js.map
 
 *.DS_Store
+public/workbox-74d02f44.js 2.map
+public/sw 2.js
+public/sw.js 2.map
