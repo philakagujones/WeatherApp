@@ -13,19 +13,13 @@ import Image from 'next/image';
 export async function getServerSideProps(context) {
   const city = getCity(context.params.city);
 
-  if (!city) {
-    console.log("city broke");
-    return {
-      notFound: true,
-    }
-  }
+  
 
   const res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${city.coord.lat}&lon=${city.coord.lon}&appid=${process.env.API_KEY}&exlude=minutely&units=metric`);
 
   const data = await res.json();
 
   if (!data) {
-    console.log("data broke");
     return {
       notFound: true,
     }
