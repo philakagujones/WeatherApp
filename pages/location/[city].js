@@ -14,6 +14,7 @@ export async function getServerSideProps(context) {
   const city = getCity(context.params.city);
 
   if (!city) {
+    console.log("city broke");
     return {
       notFound: true,
     }
@@ -24,6 +25,7 @@ export async function getServerSideProps(context) {
   const data = await res.json();
 
   if (!data) {
+    console.log("data broke");
     return {
       notFound: true,
     }
