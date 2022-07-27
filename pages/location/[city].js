@@ -13,17 +13,17 @@ import Image from 'next/image';
 export async function getServerSideProps(context) {
   const city = getCity(context.params.city);
 
-  
+  if (!city) {
+    return {
+      notFound: true,
+    }
+  }
 
   const res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${city.coord.lat}&lon=${city.coord.lon}&appid=${process.env.API_KEY}&exlude=minutely&units=metric`);
 
   const data = await res.json();
 
-  if (!data) {
-    return {
-      notFound: true,
-    }
-  }
+  
   
   return {
     props: {
